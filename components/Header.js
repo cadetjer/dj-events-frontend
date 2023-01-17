@@ -6,14 +6,14 @@ export default function Header() {
     <header className={styles.header}>
         <div className={styles.logo}>
             <Link href='/'>
-               DJ Events
+                DJ Events
             </Link>
         </div>
         <nav>
             <ul>
                 <li>
                     <Link href='/events'>
-                        <a>Events</a>
+                        Events
                     </Link>
                 </li>
             </ul>
