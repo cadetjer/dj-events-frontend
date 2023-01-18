@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/about.js", "components/Layout.js", "pages/api/[slug].js", "pages/api/events/index.js", "config/index.js", "pages/events/index.js", "pages/events/add.js", "pages/events/[slug].js", "pages/_app.js", "pages/404.js", "pages/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/about.js", "components/Layout.js", "pages/api/events/[slug].js", "pages/api/events/index.js", "config/index.js", "pages/events/index.js", "pages/events/add.js", "pages/events/[slug].js", "pages/_app.js", "pages/404.js", "pages/index.js"],
   "exclude": ["node_modules"]
 }

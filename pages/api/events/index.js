@@ -14,7 +14,7 @@
 
 const {events} = require('./data.json')
 
-export default (req:any, res:any) => {
+export default (req, res) => {
   if(req.method === 'GET') {
     res.status(200).json(events)
   }
