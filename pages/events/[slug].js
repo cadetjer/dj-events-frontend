@@ -7,6 +7,10 @@ import styles from "@/styles/Event.module.css"
 import { func } from "prop-types"
 
 export default function EventPage({evt}) {
+
+  evt = evt.attributes
+  console.log(evt.image.data.attributes.formats.thumbnail.url)
+
   const deleteEvent = (e) => {
     console.log('delete')
   }
@@ -23,12 +27,12 @@ export default function EventPage({evt}) {
             </a>
           </div>
           <span>
-            {evt.date} at {evt.time}
+          {new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
           </span>
           <h1>{evt.name}</h1>
           {evt.image && (
             <div className={styles.image}>
-              <Image src={evt.image} width={960} height={600} />
+              <Image src={evt.image.data.attributes.formats.thumbnail.url} width={960} height={600} />
             </div>
           )}
 
@@ -48,27 +52,26 @@ export default function EventPage({evt}) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/api/events/`)
+  const res = await fetch(`${API_URL}/api/events?populate=*`)
   const events = await res.json()
-
-  const paths = events.map(evt => ({
-    params: {slug: evt.slug}
+  
+  const paths = events.data.map((evt) => ({
+    params: { slug: evt.attributes.slug },
   }))
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   }
 }
 
-export async function getStaticProps({ params: 
-  { slug } }) {
-  const res = await fetch(`${API_URL}/api/events/${slug}`)
+export async function getStaticProps({ params: { slug } }) {
+  const res = await fetch(`${API_URL}/api/events?populate=*&?slug=${slug}`)
   const events = await res.json()
 
   return {
     props: {
-      evt: events[0],
+      evt: events.data[0],
     },
     revalidate: 1,
   }
