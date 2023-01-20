@@ -1,8 +1,7 @@
 import Layout from '@/components/Layout'
 import EventItem from '@/components/EventItem'
 import Pagination from '@/components/Pagination'
-import {API_URL} from '@/config/index'
-const PER_PAGE = 5
+import {API_URL, PER_PAGE} from '@/config/index'
 
 export default function EventPage({events, page, total}) {
   const lastPage = Math.ceil(total / PER_PAGE)
