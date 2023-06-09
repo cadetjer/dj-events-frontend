@@ -15,8 +15,10 @@ export default function RegisterPage() {
 
     const {register, error} = useContext(AuthContext)
 
+    useEffect(() => error && toast.error(error))
+
     const handleSubmit = (e) => {
-        e.preventDefault
+        e.preventDefault()
         if(password !== passwordConfirm) {
             toast.error('Passwords do not match!')
         }
@@ -69,7 +71,7 @@ export default function RegisterPage() {
             </form>
 
             <p>
-                Already have an account? <Link legacyBehavior href='/account/login'>Login</Link>
+                Already have an account? <Link legacyBehavior href='/account/login'>Register</Link>
             </p>
         </div>
     </Layout>

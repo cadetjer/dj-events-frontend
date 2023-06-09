@@ -1,3 +1,4 @@
+import {parseCookies} from '@/helper/index'
 import moment from "moment"
 import {FaImage} from 'react-icons/fa'
 import { use, useState } from "react"
@@ -13,7 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function EditEventPage({evt}) {
+export default function EditEventPage({evt, token}) {
   const [values, setValues] = useState ({
     name: evt.name,
     performers: evt.performers,
@@ -44,9 +45,10 @@ export default function EditEventPage({evt}) {
     }
 
     const res = await fetch(`${API_URL}/events/${evt.id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(values),
     })
@@ -171,19 +173,25 @@ export default function EditEventPage({evt}) {
         </div>
 
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-            <ImageUpload evId={evt.id} imageUploaded={imageUploaded}/>
+            <ImageUpload 
+            evId={evt.id} 
+            imageUploaded={imageUploaded}
+            token={token}/>
         </Modal>
     </Layout>
   )
 }
 
-export async function getServerSideProps({params: {id}}) {
+export async function getServerSideProps({params: {id}, req}) {
+  const {token} = parseCookies(req)
+
     const res = await fetch(`${API_URL}/events/${id}`)
     const evt = await res.json()
 
     return {
         props: {
-            evt
+            evt,
+            token
         }
     }
 }

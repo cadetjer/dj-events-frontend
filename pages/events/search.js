@@ -11,7 +11,7 @@ export default function SearchPage({events}) {
   return (
     <Layout title='Search Results'>
         <Link legacyBehavior href='/events'>Go Back</Link>
-      <h1>Search Results for "{router.query.term}"</h1>
+      <h1>Search Results for {router.query.term}</h1>
       {events.length === 0 && <h3>No events to show</h3>}
 
       {events.data.map((evt) => (
@@ -21,22 +21,22 @@ export default function SearchPage({events}) {
   )
 }
 
-export async function getServerSideProps({query: {term}}) {
-    const query = qs.stringify({
-        _where: {
-            _or: [
-                {name_contains: term},
-                {performers_contains: term},
-                {description_contains: term},
-                {venue_contains: term},
-            ]
-        }
-    })
-  const res = await fetch(`${API_URL}/api/events?populate=*&?${query}`)
-  const events = await res.json()
+// export async function getServerSideProps({query: {term}}) {
+//     const query = qs.stringify({
+//         _where: {
+//             _or: [
+//                 {name_contains: term},
+//                 {performers_contains: term},
+//                 {description_contains: term},
+//                 {venue_contains: term},
+//             ]
+//         }
+//     })
+//   const res = await fetch(`${API_URL}/api/events?populate=*&?${query}`)
+//   const events = await res.json()
 
-  return {
-    props: {events},
-  }
-}
+//   return {
+//     props: {events},
+//   }
+// }
 
